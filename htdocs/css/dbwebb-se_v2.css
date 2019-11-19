@@ -5741,12 +5741,12 @@ samp,
 }
 code,
 samp {
-  border: 1px solid #ccc;
+  border: 1px solid pink;
   padding-left: 1px;
   padding-right: 1px;
 }
 code {
-  background-color: #eee;
+  background-color: pink;
 }
 pre,
 div.code,
@@ -5903,7 +5903,7 @@ img {
  * and other regions of the page including route specific styles.
  */
 /** ==============================================================
- * Horisontal grid setup 
+ * Horisontal grid setup
  */
 .inner-wrap {
   margin-right: auto;
@@ -5927,7 +5927,7 @@ img {
   clear: both;
 }
 /** ==============================================================
- * Header 
+ * Header
  */
 /*
 .site-header {
@@ -6282,14 +6282,14 @@ a.rm-button.rm-clicked .rm-button-face-2 {
   font-size: 1.5em;
 }
 .rm-navbar-max .rm-mobile {
-  background-color: #444;
+  background-color: hotpink;
   text-align: left;
 }
 .rm-navbar-max .rm-mobile a {
   color: #fff;
 }
 .rm-navbar-max .rm-mobile a:hover {
-  background-color: #555;
+  background-color: white;
 }
 .region-navbar {
   display: inline;
@@ -6816,7 +6816,7 @@ a.rm-button.rm-clicked .rm-button-face-2 {
   padding-left: 1em;
 }
 .site-footer {
-  color: #aaa;
+  color: white;
   text-align: center;
   padding-bottom: 24px;
 }
@@ -6883,11 +6883,11 @@ a.rm-button.rm-clicked .rm-button-face-2 {
  * Show off the regions used in the website, to ease styling.
  */
 .regions .outer-wrap {
-  background-color: #f4e3c9;
+  background-color: green;
   border: 1px solid #e3b774;
 }
 .regions .inner-wrap {
-  background-color: #f4e0e9;
+  background-color: green;
   border: 1px solid #d995b4;
 }
 .regions .region-header-col-1,
@@ -6906,7 +6906,7 @@ a.rm-button.rm-clicked .rm-button-face-2 {
 .regions .region-footer-column-1,
 .regions .region-footer-column-2,
 .regions .region-footer-column-3 {
-  background-color: #b5dce1;
+  background-color: green;
   border: 1px solid #6cbac4;
   color: #111;
 }

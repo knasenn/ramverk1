@@ -6,13 +6,23 @@ return [
     // Use for styling the menu
     "wrapper" => null,
     "class" => "my-navbar rm-default rm-desktop",
- 
+
     // Here comes the menu items
     "items" => [
         [
             "text" => "Hem",
             "url" => "",
             "title" => "Första sidan, börja här.",
+        ],
+        [
+            "text" => "IP validering",
+            "url" => "ipval",
+            "title" => "Validering ip.",
+        ],
+        [
+            "text" => "IP Json",
+            "url" => "ipjson",
+            "title" => "Validering ip Json.",
         ],
         [
             "text" => "Redovisning",
