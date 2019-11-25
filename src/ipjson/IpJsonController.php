@@ -24,27 +24,6 @@ class IpJsonController implements ContainerInjectableInterface
 
 
 
-    /**
-     * @var string $db a sample member variable that gets initialised
-     */
-    private $db = "not active";
-
-
-
-    /**
-     * The initialize method is optional and will always be called before the
-     * target method/action. This is a convienient method where you could
-     * setup internal properties that are commonly used by several methods.
-     *
-     * @return void
-     */
-    public function initialize() : void
-    {
-        // Use to initialise member variables.
-        $this->db = "active";
-    }
-
-
 
     /**
      * This is the index method action, it handles:
@@ -56,11 +35,13 @@ class IpJsonController implements ContainerInjectableInterface
      */
     public function indexActionGet() : object
     {
-        $page = $this->di->get("page");
 
+        $page = $this->di->get("page");
+        $adress = $_SERVER["HTTP_X_FORWARDED_FOR"] ?? "";
 
         $data = [
-            "test" => "testingXYO",
+            "test" => "testing",
+            "adress" => $adress,
         ];
 
         $page->add("ipjson/index", $data);
@@ -80,32 +61,27 @@ class IpJsonController implements ContainerInjectableInterface
      */
     public function indexActionPost() : array
     {
+        //gets pagestuff?
         $page = $this->di->get("page");
-        // var_dump($_POST["ip"]);
-        $ip = $_POST["ip"];
+        //get ip
+        $ip = $this->di->request->getPOST("ip");
 
-
-        // Validate ip
-        if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-            // $ipval = "$ip is a valid IPv6 address";
-            $valid = true;
-            $host = gethostbyaddr("$ip");
-        } elseif (filter_var($ip, FILTER_VALIDATE_IP)) {
-            // $ipval = "$ip is a valid IPv4 address";
-            $valid = true;
-            $host = gethostbyaddr("$ip");
-        } else {
-            // $ipval = "$ip is not a valid IP address";
-            $valid = false;
-            $host = "";
-        }
-
-
+        $validate = new \Aiur\Validate\Validate();
+        //Validates ip
+        $resValidateIp = $validate->validateIp($ip);
+        //Gets hostname
+        $resDomain = $validate->getDomain($ip);
+        //Gets curl
+        $resCurl = $validate->getCurl($ip);
 
         $data = [
             "ip" => $ip,
-            "valid" => $valid,
-            "domain" => $host,
+            "valid" => $resValidateIp,
+            "domain" => $resDomain,
+            "latitude" => $resCurl->latitude,
+            "longitude" => $resCurl->longitude,
+            "country_name" => $resCurl->country_name,
+            "region_name" => $resCurl->region_name,
         ];
 
         // $page->add("ipjson/validator", $data);
