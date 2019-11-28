@@ -1,6 +1,6 @@
 <?php
 
-namespace Anax\IpVal;
+namespace Anax\jsonweather;
 
 use Anax\Commons\ContainerInjectableInterface;
 use Anax\Commons\ContainerInjectableTrait;
@@ -18,7 +18,7 @@ use Anax\Commons\ContainerInjectableTrait;
  *
  * @SuppressWarnings(PHPMD.TooManyPublicMethods)
  */
-class IpValController implements ContainerInjectableInterface
+class JsonWeatherController implements ContainerInjectableInterface
 {
     use ContainerInjectableTrait;
 
@@ -44,7 +44,7 @@ class IpValController implements ContainerInjectableInterface
             "adress" => $adress,
         ];
 
-        $page->add("ipval/index", $data);
+        $page->add("jsonweather/index", $data);
 
         return $page->render();
     }
@@ -59,36 +59,59 @@ class IpValController implements ContainerInjectableInterface
      *
      * @return string
      */
-    public function indexActionPost() : object
+    public function indexActionPost() : array
     {
         //gets pagestuff?
         $page = $this->di->get("page");
         //get ip
         $ip = $this->di->request->getPOST("ip");
+        //get dateChecked
+        $dateChecked = $this->di->request->getPOST("dateChecked");
 
         //Creates validate-class object
         $validate = $this->di->get("validator");
-
         //Validates ip
         $resValidateIp = $validate->validateIp($ip);
         //Gets hostname
         $resDomain = $validate->getDomain($ip);
-        //Gets curl
-        $resCurl = $validate->getCurl($ip);
 
+        $curl = new \Aiur\Curl\Curl();
+        //Gets curl adress
+        $resCurlAdress = $curl->getCurlAdress($ip, $resValidateIp);
+
+
+        if (is_array($resCurlAdress)) {
+            if (is_float($resCurlAdress[0])) {
+                if ($dateChecked == "plusweek") {
+                    $resCurlTempWeek = $curl->getCurlTemp($resCurlAdress[0], $resCurlAdress[1], $dateChecked);
+                } elseif ($dateChecked == "minusmonth") {
+                    $resCurlTempMonth = $curl->getCurlTemp($resCurlAdress[0], $resCurlAdress[1], $dateChecked);
+                }
+            } elseif (is_string($resCurlAdress[0])) {
+                $notValid = "Search was not valid!";
+            }
+        } else {
+            if ($dateChecked == "plusweek") {
+                $resCurlTempWeek = $curl->getCurlTemp($resCurlAdress->latitude, $resCurlAdress->longitude, $dateChecked);
+            } elseif ($dateChecked == "minusmonth") {
+                $resCurlTempMonth = $curl->getCurlTemp($resCurlAdress->latitude, $resCurlAdress->longitude, $dateChecked);
+            }
+        }
         $data = [
             "ipval" => $resValidateIp,
             "host" => $resDomain,
-            "latitude" => $resCurl->latitude,
-            "longitude" => $resCurl->longitude,
-            "country_name" => $resCurl->country_name,
-            "region_name" => $resCurl->region_name,
+            "latitude" => $resCurlAdress->latitude ?? "",
+            "longitude" => $resCurlAdress->longitude ?? "",
+            "country_name" => $resCurlAdress->country_name ?? "",
+            "region_name" => $resCurlAdress->region_name ?? "",
+            "resTempWeek" => $resCurlTempWeek->daily->data ?? "",
+            "resTempMonth" => $resCurlTempMonth ?? "",
+            "notValid" => $notValid ?? ""
         ];
 
+        // $page->add("jsonweather/weather", $data);
 
-        $page->add("ipval/validator", $data);
 
-
-        return $page->render();
+        return [$data];
     }
 }

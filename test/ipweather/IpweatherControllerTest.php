@@ -1,6 +1,6 @@
 <?php
 
-namespace Anax\IpVal;
+namespace Anax\Ipweather;
 
 use Anax\DI\DIFactoryConfig;
 use PHPUnit\Framework\TestCase;
@@ -11,7 +11,7 @@ use PHPUnit\Framework\TestCase;
 /**
  * Test the SampleController.
  */
-class IpValControllerTest extends TestCase
+class IpweatherControllerTest extends TestCase
 {
     // use ContainerInjectableTrait;
     /**
@@ -29,7 +29,7 @@ class IpValControllerTest extends TestCase
         $di->get("cache")->setPath(ANAX_INSTALL_PATH . "/test/cache");
 
         //setup
-        $test = new IpValController();
+        $test = new IpweatherController();
         $test->setDI($di);
         // $test->initialize();
 
@@ -55,24 +55,41 @@ class IpValControllerTest extends TestCase
         $di->get("cache")->setPath(ANAX_INSTALL_PATH . "/test/cache");
 
         //setup
-        $test = new IpValController();
+        $test = new IpweatherController();
         $test->setDI($di);
 
         //Test1
         // $_POST["ip"] = "8.8.8.8";
         $di->get("request")->setPost("ip", "2a03:2880:f21a:e5:face:b00c::4420");
+        $di->get("request")->setPost("dateChecked", "plusweek");
         $res = $test->indexActionPost();
         $this->assertIsObject($res);
 
         //Test2
         // $_POST["ip"] = "8.8.8.8";
         $di->get("request")->setPost("ip", "8.8.8.8");
+        $di->get("request")->setPost("dateChecked", "minusmonth");
         $res = $test->indexActionPost();
         $this->assertIsObject($res);
 
         //Test3
         // $_POST["ip"] = "123";
         $di->get("request")->setPost("ip", "asd");
+        $res = $test->indexActionPost();
+        $this->assertIsObject($res);
+
+
+        //Test4
+        // $_POST["ip"] = "8.8.8.8";
+        $di->get("request")->setPost("ip", "50.0,50.0");
+        $di->get("request")->setPost("dateChecked", "plusweek");
+        $res = $test->indexActionPost();
+        $this->assertIsObject($res);
+
+        //Test5
+        // $_POST["ip"] = "8.8.8.8";
+        $di->get("request")->setPost("ip", "50.0,50.0");
+        $di->get("request")->setPost("dateChecked", "minusmonth");
         $res = $test->indexActionPost();
         $this->assertIsObject($res);
     }

@@ -12,6 +12,36 @@ class Validate implements ContainerInjectableInterface
 {
     use ContainerInjectableTrait;
 
+    private $url;
+    private $apikey;
+
+
+
+    /**
+     * Set the view to be used for the layout.
+     *
+     * @param array $view configuration to create up the view.
+     *
+     * @return $this
+     */
+    public function setUrl($urlen)
+    {
+        $this->url = $urlen;
+    }
+
+
+    /**
+     * Set the view to be used for the layout.
+     *
+     * @param array $view configuration to create up the view.
+     *
+     * @return $this
+     */
+    public function setKey($keyz)
+    {
+        $this->apikey = $keyz;
+    }
+
 
     /**
      * Set the view to be used for the layout.
@@ -23,13 +53,13 @@ class Validate implements ContainerInjectableInterface
     public function validateIp($ip)
     {
         if (filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6)) {
-            $ipval = "$ip is a valid IPv6 address";
+            $ipval = "IP is a valid IPv6 address";
             return $ipval;
         } elseif (filter_var($ip, FILTER_VALIDATE_IP)) {
-            $ipval = "$ip is a valid IPv4 address";
+            $ipval = "IP is a valid IPv4 address";
             return $ipval;
         } else {
-            $ipval = "$ip is not a valid IP address";
+            $ipval = "IP is not a valid IP address";
             return $ipval;
         }
     }
@@ -68,15 +98,10 @@ class Validate implements ContainerInjectableInterface
     public function getCurl($ip)
     {
         $curl = curl_init();
-        curl_setopt($curl, CURLOPT_URL, "http://api.ipstack.com/{$ip}?access_key=5743a124d24d6c68f6dc20dccab02eac");
+        curl_setopt($curl, CURLOPT_URL, "{$this->url}/{$ip}?access_key={$this->apikey}");
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
         $result = curl_exec($curl);
         $decoded_result = json_decode($result);
         return $decoded_result;
     }
-
-
-
-
-
 }

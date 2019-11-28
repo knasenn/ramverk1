@@ -25,6 +25,16 @@ return [
             "title" => "Validering ip Json.",
         ],
         [
+            "text" => "Weather",
+            "url" => "ipweather",
+            "title" => "weather.",
+        ],
+        [
+            "text" => "JSON-Weather",
+            "url" => "jsonweather",
+            "title" => "json weather.",
+        ],
+        [
             "text" => "Redovisning",
             "url" => "redovisning",
             "title" => "Redovisningstexter från kursmomenten.",

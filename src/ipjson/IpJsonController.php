@@ -66,7 +66,8 @@ class IpJsonController implements ContainerInjectableInterface
         //get ip
         $ip = $this->di->request->getPOST("ip");
 
-        $validate = new \Aiur\Validate\Validate();
+        //Creates validate-class object
+        $validate = $this->di->get("validator");
         //Validates ip
         $resValidateIp = $validate->validateIp($ip);
         //Gets hostname
