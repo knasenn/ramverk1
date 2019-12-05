@@ -24,12 +24,6 @@
     },
     "minimum-stability": "beta",
     "prefer-stable": true,
-    "repositories": [
-    {
-        "type": "vcs",
-        "url": "https://github.com/knasenn/ipweathermodule"
-    }
-    ],
     "require": {
         "anax/anax-ramverk1-me": "^1.0.0",
         "aiur18/ipweathermodule": "dev-master"
