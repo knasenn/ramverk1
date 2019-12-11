@@ -1,5 +1,5 @@
 {
-    "name": "aiur18/ipweathermodule",
+    "name": "knasenn/redoivsa",
     "type": "library",
     "description": "Anax ip and json weather module.",
     "keywords": ["boilerplate", "framework", "mvc", "micro", "education"],
@@ -26,7 +26,7 @@
     "prefer-stable": true,
     "require": {
         "anax/anax-ramverk1-me": "^1.0.0",
-        "aiur18/ipweathermodule": "dev-master"
+        "aiur18/vaderanax": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "^7"
