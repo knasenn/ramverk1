@@ -35,6 +35,11 @@ return [
             "title" => "json weather.",
         ],
         [
+            "text" => "Book",
+            "url" => "book",
+            "title" => "book.",
+        ],
+        [
             "text" => "Redovisning",
             "url" => "redovisning",
             "title" => "Redovisningstexter från kursmomenten.",

@@ -17,13 +17,15 @@ RewriteRule (.*) - [NC,L]
 RewriteCond %{HTTP_HOST} ^www\.student\.bth\.se$ [NC]
 RewriteRule ^image/(.*)$ /~aiur18/dbwebb-kurser/ramverk1/me/redovisa/htdocs/cimage/img.php?src=$1 [QSA,NC,L]
 
+
+
 RewriteCond %{HTTP_HOST} ^www\.student\.bth\.se$ [NC]
 RewriteRule (.*) /~aiur18/dbwebb-kurser/ramverk1/me/redovisa/htdocs/index.php/$1 [NC,L]
 
 
 # Rewrite 2 - For other requests
 RewriteCond %{HTTP_HOST} !^www\.student\.bth\.se$ [NC]
-RewriteRule ^image/(.*)$ cimage/img.php?src=$1 [QSA,NC,L] 
+RewriteRule ^image/(.*)$ cimage/img.php?src=$1 [QSA,NC,L]
 
 RewriteCond %{HTTP_HOST} !^www\.student\.bth\.se$ [NC]
 RewriteRule (.*) index.php/$1 [NC,L]
